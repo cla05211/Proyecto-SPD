@@ -1,7 +1,7 @@
 # PROYECTO-SPD
 
 ## Integrantes 
-- Clara Cuenca
+- Clara "la carreadora" Cuenca
 - Santiago Ambricca
 - Jorge Moyano
 - Dylan Galeano
