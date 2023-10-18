@@ -1,0 +1,285 @@
+// C++ code
+#define ledA 12
+#define ledB 13
+#define ledC 7
+#define ledD 8
+#define ledE 9
+#define ledF 11
+#define ledG 10
+#define sensor A0
+#define decenas A4
+#define unidades A5
+#define deslizante 2
+#define botonSubir 5
+#define botonBajar 4
+#define motor 6
+#define fotoResistencia A3
+
+int numeroUnidades = 0;
+int numeroDecenas = 0;
+int siguiente;
+int anterior;
+bool contandoPrimos;
+bool contandoTodos;
+bool banderaBotonPresionado = false;
+
+void setup()
+{
+    pinMode(ledA, OUTPUT);
+    pinMode(ledB, OUTPUT);
+    pinMode(ledC, OUTPUT);
+    pinMode(ledG, OUTPUT);
+    pinMode(ledD, OUTPUT);
+    pinMode(ledE, OUTPUT);
+    pinMode(ledF, OUTPUT);
+    pinMode(ledG, OUTPUT);
+  	pinMode(motor, OUTPUT);
+    pinMode(botonSubir, INPUT_PULLUP);
+  	pinMode(botonBajar, INPUT_PULLUP);
+  	pinMode(sensor, INPUT);
+    pinMode(decenas, OUTPUT);
+    pinMode(unidades, OUTPUT);
+    pinMode(deslizante, INPUT);
+  	pinMode(fotoResistencia, INPUT);
+    Serial.begin(9600);
+}
+
+void loop()
+{
+int lecturaSensor = analogRead(sensor);
+int temperatura = ((lecturaSensor - 102) / 2); 
+int lecturaFotoResistencia = analogRead(fotoResistencia);
+Serial.println(lecturaFotoResistencia);
+
+if (temperatura <= 50)
+{
+  digitalWrite(motor, HIGH);
+  bool estadoDeslizante = digitalRead(deslizante);
+  switch (estadoDeslizante)
+  {
+    case 0:
+      mostrarTodos();
+      break;
+    case 1:
+      mostrarPrimos();
+      break;
+   }
+if (lecturaFotoResistencia > 165)
+{
+  configurarDisplay(0,0,0,0,0,0,0);
+  delay(80);
+}
+mostrarNumero();
+} 
+else 
+{
+   configurarDisplay(0,0,0,0,0,0,0); //Apagamos los leds y el motor
+   digitalWrite(motor, LOW);
+}
+}
+void configurarDisplay(int a, int b, int c, int d, int e, int f, int g)
+{
+    digitalWrite(ledA, a);
+    digitalWrite(ledB, b);
+    digitalWrite(ledC, c);
+    digitalWrite(ledD, d);
+    digitalWrite(ledE, e);
+    digitalWrite(ledF, f);
+    digitalWrite(ledG, g);
+}  
+
+void dibujarNumeros (int numeroBuscado)
+{	
+    switch(numeroBuscado)
+    {
+    case 0:
+        configurarDisplay(1,1,1,1,1,1,0);
+        break;
+    case 1:
+        configurarDisplay(0,1,1,0,0,0,0);
+        break;
+    case 2:
+        configurarDisplay(1,1,0,1,1,0,1);
+        break;
+    case 3:
+        configurarDisplay(1,1,1,1,0,0,1);
+        break;
+    case 4:
+        configurarDisplay(0,1,1,0,0,1,1);
+        break;
+    case 5:
+        configurarDisplay(1,0,1,1,0,1,1);
+        break;
+    case 6:
+        configurarDisplay(1,0,1,1,1,1,1);
+        break;
+    case 7:
+        configurarDisplay(1,1,1,0,0,0,0);
+        break;
+    case 8:
+        configurarDisplay(1,1,1,1,1,1,1);
+        break;
+    case 9:
+        configurarDisplay(1,1,1,1,0,1,1);
+        break;
+    } 
+}
+
+void mostrarTodos()
+{
+  contandoPrimos = false;
+  if (contandoTodos == false)
+  {
+    numeroDecenas = 0;
+    numeroUnidades = 0;
+    contandoTodos = true;
+  }
+  int estadoBotonSubir = digitalRead(botonSubir);
+  int estadoBotonBajar = digitalRead(botonBajar);
+  if (estadoBotonSubir == 0 || estadoBotonBajar == 0)
+  {
+      if (banderaBotonPresionado == false)
+    	{
+     	 banderaBotonPresionado = true;
+         actualizarDecenasUnidades();
+        }
+  }
+  else
+  {
+    banderaBotonPresionado = false;
+  }	
+}
+
+void mostrarPrimos()
+{  
+  contandoTodos = false;
+  if (contandoPrimos == false)
+  {
+    numeroDecenas = 0;
+    numeroUnidades = 0;
+    contandoPrimos = true;
+  }
+  int estadoBotonSubir = digitalRead(botonSubir);
+  int estadoBotonBajar = digitalRead(botonBajar);
+  if (estadoBotonSubir == 0)
+  {
+      if (banderaBotonPresionado == false)
+    	{
+     	 banderaBotonPresionado = true;
+         int numero = numeroDecenas * 10 + numeroUnidades + 1;
+         siguiente = siguientePrimo(numero);
+      }
+  }
+  else if (estadoBotonBajar == 0)
+  {
+    if (banderaBotonPresionado == false)
+    {
+      banderaBotonPresionado = true;
+      int numero = numeroDecenas * 10 + numeroUnidades - 1;
+      if (numero == -1)
+      {
+        numero = 99;
+      }  
+      anterior = anteriorPrimo(numero);
+    }
+  }
+  else
+  {
+    banderaBotonPresionado = false;
+  }		
+}
+
+void mostrarNumero()
+{
+    digitalWrite(decenas, HIGH);
+    digitalWrite(unidades, HIGH);
+    dibujarNumeros(numeroDecenas);
+    digitalWrite(decenas, LOW);
+    digitalWrite(unidades, HIGH);
+    delay(10);
+  
+    digitalWrite(decenas, HIGH);
+    digitalWrite(unidades, HIGH);
+    dibujarNumeros(numeroUnidades);
+    digitalWrite(decenas, HIGH);
+    digitalWrite(unidades, LOW);
+    delay(10);
+}
+
+void actualizarDecenasUnidades()
+{
+  int estadoBotonSubir = digitalRead(botonSubir);
+  int estadoBotonBajar = digitalRead(botonBajar);
+  if (estadoBotonSubir == 0)
+  {
+    if (numeroUnidades == 9)
+    {	
+      numeroUnidades = 0;
+      numeroDecenas += 1;
+    }
+    else
+    {
+      numeroUnidades += 1;
+    }
+    if (numeroDecenas > 9)
+    {
+      numeroDecenas = 0;
+    }
+  }
+  else if (estadoBotonBajar == 0)
+  {
+    if (numeroUnidades == 0)
+    {	
+      numeroUnidades = 9;
+      numeroDecenas -= 1;
+    }
+    else
+    {
+      numeroUnidades -= 1;
+    } 
+    if (numeroDecenas < 0)
+    {
+      numeroDecenas = 9;
+    }  
+  }
+}
+
+int siguientePrimo(int numero)
+{
+  int siguiente = numero;
+  while (true) //hasta no encontrar el siguiente primo no frena
+  {
+    actualizarDecenasUnidades();
+    if (determinarSiEsPrimo(siguiente))
+    {
+      return siguiente;
+    }
+    siguiente++;
+  }
+}
+
+int anteriorPrimo(int numero)
+{
+  int anterior = numero;
+  while (true) //hasta no encontrar el siguiente primo no frena
+  {
+    actualizarDecenasUnidades();
+    if (determinarSiEsPrimo(anterior))
+    {
+      return anterior;
+    }
+    anterior--;
+  }
+}
+  
+bool determinarSiEsPrimo(int numero)
+{ 
+    for (int divisor = 2; divisor < numero; divisor++)
+    {
+        if (numero % divisor == 0)
+        {
+            return false;
+        } 
+    }  
+    return true;
+}
