@@ -7,7 +7,7 @@
 - Dylan Galeano
 
 ## Primera parte - Contador de 0 a 99 con Display 7 Segmentos y Multiplexación.
-![image](https://github.com/SAmbricca/TP-SPD/assets/117587525/12f7cb98-796a-423f-a904-2a9be28d0f71)
+[Img/Primera parte.png](https://github.com/SAmbricca/Proyecto-SPD/blob/b5efcc70601a47d90bcc3e9e24d80afb037fd4e4/Img/Primera%20parte.png)
 
 ## Descripción
 Utilizando la técnica de multiplexación, se muestran los números del 0 al 99 mediante dos displays de 7 segmentos. Al presionar los botones, el contador aumentará, disminuirá o se reiniciará, respectivamente.
@@ -16,7 +16,7 @@ Utilizando la técnica de multiplexación, se muestran los números del 0 al 99 
 https://www.tinkercad.com/things/h7tS8dfDWvt?sharecode=M_-4ScPXRaZu-yy-105vIUKHCRaY0bu3v02LwuJ2FPU
 
 ## Segunda parte - Modificación con Interruptor Deslizante y Números Primos.
-![image](https://github.com/SAmbricca/TP-SPD/assets/117587525/54c2bdf3-2d94-4a11-bc48-12b3dcdc42d2)
+[![image](https://github.com/SAmbricca/TP-SPD/assets/117587525/54c2bdf3-2d94-4a11-bc48-12b3dcdc42d2)](https://github.com/SAmbricca/Proyecto-SPD/blob/b5efcc70601a47d90bcc3e9e24d80afb037fd4e4/Img/Segunda%20parte.png)
 
 ## Descripción
 Se reemplazó el botón reiniciar por un interruptor deslizante. Dependiendo de la posición del interruptor, los displays mostraran todos los números (como en la primera parte), o sólo los números primos.
@@ -27,7 +27,7 @@ En esta ocasión, el motor no tiene una utilidad real en el proyecto, es solo de
 https://www.tinkercad.com/things/hQJ2FbbTdeM?sharecode=k_4B6cy1MBkjQ8rDKuGfSpQG3RdgZ2tCy8VJqfTiFzk
 
 ## Tercera parte - Implementando una fotoresistencia
-![image](https://github.com/SAmbricca/TP-SPD/assets/117587525/f9bbadca-298b-4127-8534-b59b924bfbdb)
+[![image](https://github.com/SAmbricca/TP-SPD/assets/117587525/f9bbadca-298b-4127-8534-b59b924bfbdb)](https://github.com/SAmbricca/Proyecto-SPD/blob/b5efcc70601a47d90bcc3e9e24d80afb037fd4e4/Img/TerceraParte.png)
 
 ## Descripción
 Se añadió una fotoresistencia a la segunda parte del proyecto.
