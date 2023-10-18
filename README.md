@@ -1,4 +1,5 @@
 # PROYECTO-SPD
+![Tinkercad](./img/ArduinoTinkercad.png)
 
 ## Integrantes 
 - Clara "la carreadora" Cuenca
