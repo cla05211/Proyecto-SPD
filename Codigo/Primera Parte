@@ -1,0 +1,176 @@
+// C++ code
+#define ledA 12
+#define ledB 13
+#define ledC 7
+#define ledD 8
+#define ledE 9
+#define ledF 11
+#define ledG 10
+#define decenas A4
+#define unidades A5
+#define botonSubir 4
+#define botonBajar 3
+#define botonReiniciar 2
+
+int numeroUnidades = 0;
+int numeroDecenas = 0;
+bool banderaBotonPresionado = false; // Verifico que no mantenga apretado el boton
+
+void setup()
+{
+    pinMode(LED_BUILTIN, OUTPUT);
+    pinMode(ledA, OUTPUT);
+    pinMode(ledB, OUTPUT);
+    pinMode(ledC, OUTPUT);
+    pinMode(ledG, OUTPUT);
+    pinMode(ledD, OUTPUT);
+    pinMode(ledE, OUTPUT);
+    pinMode(ledF, OUTPUT);
+    pinMode(ledG, OUTPUT);
+    pinMode(decenas, OUTPUT);
+    pinMode(unidades, OUTPUT);
+    pinMode(botonSubir, INPUT_PULLUP);
+    pinMode(botonBajar, INPUT_PULLUP);
+    pinMode(botonReiniciar, INPUT_PULLUP);
+}
+void loop()
+{
+encenderDecenas();
+encenderUnidades();
+  
+int estadoBotonSubir = digitalRead(botonSubir);
+int estadoBotonBajar = digitalRead(botonBajar);
+int estadoBotonReiniciar = digitalRead(botonReiniciar);
+
+if (estadoBotonSubir == 0)
+{  
+  if (banderaBotonPresionado == false)
+  {
+    subirContador();
+    banderaBotonPresionado = true;
+  }
+}
+else if (estadoBotonBajar == 0)
+{
+  if (banderaBotonPresionado == false)
+    bajarContador();
+  	banderaBotonPresionado = true;
+}
+else if (estadoBotonReiniciar == 0)
+{
+    reiniciarContador();
+}
+else
+{
+  banderaBotonPresionado = false;
+}  
+if (numeroDecenas > 9)
+{
+    numeroDecenas = 0;
+}
+}
+
+
+void configurarDisplay(int a, int b, int c, int d, int e, int f, int g)
+{
+    digitalWrite(ledA,a);
+    digitalWrite(ledB,b);
+    digitalWrite(ledC,c);
+    digitalWrite(ledD,d);
+    digitalWrite(ledE,e);
+    digitalWrite(ledF,f);
+    digitalWrite(ledG,g);
+}  
+
+void dibujarNumeros (int numeroBuscado)
+{	
+  	configurarDisplay(0,0,0,0,0,0,0);
+    switch(numeroBuscado)
+    {
+        case 0:
+        configurarDisplay(1,1,1,1,1,1,0);
+        break;
+        case 1:
+        configurarDisplay(0,1,1,0,0,0,0);
+        break;
+        case 2:
+        configurarDisplay(1,1,0,1,1,0,1);
+        break;
+        case 3:
+        configurarDisplay(1,1,1,1,0,0,1);
+        break;
+        case 4:
+        configurarDisplay(0,1,1,0,0,1,1);
+        break;
+        case 5:
+        configurarDisplay(1,0,1,1,0,1,1);
+        break;
+        case 6:
+        configurarDisplay(1,0,1,1,1,1,1);
+        break;
+        case 7:
+        configurarDisplay(1,1,1,0,0,0,0);
+        break;
+        case 8:
+        configurarDisplay(1,1,1,1,1,1,1);
+        break;
+        case 9:
+        configurarDisplay(1,1,1,1,0,1,1);
+        break;
+    }
+}  
+
+void encenderDecenas()
+{
+    digitalWrite(decenas, HIGH);
+    digitalWrite(unidades, HIGH);
+    dibujarNumeros(numeroDecenas);
+    digitalWrite(decenas, LOW);
+    digitalWrite(unidades, HIGH);
+    delay(10);
+}
+
+void encenderUnidades()
+{
+    digitalWrite(decenas, HIGH);
+    digitalWrite(unidades, HIGH);
+  	dibujarNumeros(numeroUnidades);
+    digitalWrite(decenas, HIGH);
+    digitalWrite(unidades, LOW);
+    delay(10);
+}
+
+void subirContador()
+{
+    if (numeroUnidades == 9)
+    {	
+        numeroUnidades = 0;
+        numeroDecenas += 1;
+    }
+    else
+    {
+        numeroUnidades +=1;
+    } 
+}
+
+void bajarContador()
+{
+    if (numeroUnidades == 0)
+    {	
+        numeroUnidades = 9;
+        numeroDecenas -= 1;
+    }
+    else
+    {
+        numeroUnidades -=1;
+    } 
+    if (numeroDecenas < 0)
+    {
+        numeroDecenas = 9;
+    }  
+}
+void reiniciarContador()
+{
+    numeroDecenas = 0;
+    numeroUnidades = 0;
+}
