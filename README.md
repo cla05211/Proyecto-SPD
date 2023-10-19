@@ -2,7 +2,7 @@
 ![Tinkercad](./img/ArduinoTinkercad.png)
 
 ## Integrantes 
-- Clara "la carreadora" Cuenca
+- Clara Cuenca
 - Santiago Ambricca
 - Jorge Moyano
 - Dylan Galeano
