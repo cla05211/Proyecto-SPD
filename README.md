@@ -34,3 +34,7 @@ La fotoresistencia detecta la intensidad de la luz que el arduino recibe. En bas
 
 ## :robot: Link a la tercera parte
 https://www.tinkercad.com/things/ah6izHFt7Qk?sharecode=Q5CEUSWxt1ublBDTk703Kj9ALq5wnlrfiPtFN0p1FRI
+
+## Cuarta Parte
+## :robot: Link a la cuarta parte
+https://www.tinkercad.com/things/glGctZXv5PQ?sharecode=8otKRgcnzi84UnuqjrmuUZHZ7zurehcQCpI0fajeonI
